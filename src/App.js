@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import Navigation from './Components/Header';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Landing, Home, Weather } from './Pages';
+import { getScreenResolution } from './Helpers/getScreenResolution';
+
+
+const resolution = getScreenResolution();
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const router = createBrowserRouter([
+        { path: '/', element: <Landing /> },
+        { path: '/home', element: <Home /> },
+        { path: '/weather/:city', element: <Weather /> },
+    ]);
+
+
+    return (
+        <div>
+            <Navigation />
+            <div style={styles.body}>
+                <RouterProvider router={router} />
+            </div>
+        </div>
+    );
 }
 
 export default App;
+
+const styles = {
+    body: {
+        margin: resolution.width > 768 ? '10% 20%' : '10% 5%',
+    },
+};
